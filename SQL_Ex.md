@@ -1,6 +1,10 @@
 # DataBaseHomeWork
 
 
+
+С 1-ГО ПО 24 ЗАДАНИЯ НАХОДЯТСЯ НА SQL_EX, МОГУ ПРЕДОСТАВИТЬ СКРИНШОТЫ
+
+
 25.
 SELECT DISTINCT maker
 FROM product
