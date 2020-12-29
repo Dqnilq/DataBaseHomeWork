@@ -1,0 +1,79 @@
+create table "groups"
+(
+"id" serial primary key,
+"name" varchar(12) not null,
+"faculty" varchar(10) not null,
+);
+///////
+insert into "groups"(name, faculty) values('11-001', 'ITIS');
+insert into "groups"(name, faculty) values('11-911', 'ITIS');
+insert into "groups"(name, faculty) values('07-503', 'IVMIIT');
+insert into "groups"(name, faculty) values('11-003', 'ITIS');
+insert into "groups"(name, faculty) values('07-511', 'IVMIIT');
+select * from groups;
+///////
+create table "students"
+(
+"id" serial primary key,
+"name" varchar(15) not null,
+"age" int not null check(age > 14),
+"group_id" int references groups(id)
+);
+///////
+insert into "students"(name, age, group_id) values('Семён', 18, 1);
+insert into "students"(name, age, group_id) values('Камилла', 18, 2);
+insert into "students"(name, age, group_id) values('Алина', 20, 3);
+insert into "students"(name, age, group_id) values('Анна', 19, 4);
+insert into "students"(name, age, group_id) values('Алексей', 19, 5);
+insert into "students"(name, age, group_id) values('Анатолий', 21, 6);
+select * from students;
+///////
+Таблица 1
+create table "dolznosti"
+"id" serial primary key,
+"rate" varchar(30) not null,
+"plus10" char(5) not null,
+"plus20" char(5) not null,
+"plus30" char(5) not null,
+"plustoxic" char(5) not null
+);
+insert into "dolznosti"(id, rate, plus10, plus20, plus30, plustoxic) values(1, 'Тракторист', 10000, 20000, 30000, 1500);
+insert into "dolznosti"(id, rate, plus10, plus20, plus30, plustoxic) values(2, 'Строитель', 1000, 2000, 3000, 1000);
+insert into "dolznosti"(id, rate, plus10, plus20, plus30, plustoxic) values(3, 'Рабочий', 1500, 2500, 3060, 3000);
+
+Таблица 2
+create table "podrazdelenia"
+(
+"id" serial primary key,
+"nameofp" varchar(30) not null,
+"code" char(8) not null,
+"person" varchar(15) not null,
+"chislsostav" char(8) not null
+);
+insert into "podrazdelenia"(id, nameofp, code, person, chislsostav) values(1, 'First', 'Газпром', 3330, 'Начальник', '230');
+insert into "podrazdelenia"(id, nameofp, code, person, chislsostav) values(2, 'Second', 'ООО', 5730, 'Начальник', '2730');
+insert into "podrazdelenia"(id, nameofp, code, person, chislsostav) values(2, 'Third', 'Таиф', 47830, 'Сотрудник', '350');
+
+Таблица 3
+create table "sostav"
+(
+"id" serial primary key,
+"lastname" varchar(15) not null,
+"name" varchar(15) not null,
+"patronymic" varchar(15) not null,
+"gender" varchar(10) not null,
+"date" varchar(10) not null,
+"age" char(2) not null,
+"codep" char(10) not null,
+"position" vatchar(15) not null,
+"stash" char(2) not null
+"toxik" varchar(3) not null
+);
+insert into "sostav"(id, lastname, name, patronymic, gender, date, age, codep, position, stash, toxik) values(1, 'Барышев', 'Егор', 'Анатольевич', 'мужской', '25.10.1997', '34564', 10, 'yes');
+insert into "sostav"(id, lastname, name, patronymic, gender, date, age, codep, position, stash, toxik) values(2, 'Анатольев', 'Вадим', 'Суворович', 'мужской', '16.12.1997', '34563', 15, 'yes');
+insert into "sostav"(id, lastname, name, patronymic, gender, date, age, codep, position, stash, toxik) values(3, 'Калинина', 'Людмила', 'Занкинич', 'женский', '13.10.1999', '3456', 3, 'no');
+insert into "sostav"(id, lastname, name, patronymic, gender, date, age, codep, position, stash, toxik) values(4, 'Кузоватов', 'Дамир', 'Анатольевич', 'мужской', '30.03.2001', '34567', 3, 'yes');
+
+Запросы:
+1. Select nameofp from podrazdelenia where chislsostav > 3000;
+2. Select * from podrazdelenia where (select * from sostav where age > 15) and ((select toxic from sostav where toxic = 'yes') or (select plus10, plus20, plus30 from dolznosti where plus10>0 or plus20>0 or plus30>0))

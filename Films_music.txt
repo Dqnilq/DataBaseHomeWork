@@ -1,0 +1,19 @@
+Это классная работа по трекам и исполнителям:
+Выбрать всех пользователей, которые добавили только треки Моргенштерна
+Select * from users where exists(A)
+A = select * from Likes join tracks on likes.tracksid = tracksid join artists on tracks.artistsid = artists.id
+where artists.name = 'Morgenshtern'
+
+А теперь тех, кто добавил других исполнителей (не Моргенштерна), более сложный запрос
+Select * from users where exists(A) not exists(B)
+B = select * from likes join tracks on likes.tracksid = tracks.id join artists on tracks.artistsid = artists.id
+where artists.name != 'Morgenshtern'
+
+
+Теперь немного другое задание с делением:
+Есть таблицы с лайками и с треками
+Написать запрос, что не существует трек, что для него не существует likes
+Select * from users where P
+P = not exists (select * from tracks where tracks join artists on tracks.artist_id =
+artist.id where artist.name = 'Morgenshtern' and not exists (select * from likes
+where likes.users_id = users.id and traks.id = likes.track_id).
