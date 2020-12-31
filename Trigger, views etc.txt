@@ -1,0 +1,43 @@
+Триггер:
+
+create trigger save_in_deleted_musicians on musicians
+for delete
+as
+insert into deleted_musicians("m_no", "m_name", "born", "died", "born_in", "living_in")
+select m_no, m_name, born, died, born_in, living_in
+from deleted
+
+(Для второго задания)
+Представление:
+
+CREATE VIEW info_of_performers AS
+SELECT *
+FROM musician JOIN performer
+ON m_no = perf_is
+JOIN place ON place_no = born_in
+
+Процедура:
+
+create procedure get_performers_by_born_country
+@country nvarchar(40)
+as
+select info_of_performers.name
+from info_of_performers
+where names_of_performers.country = @country
+
+
+Для третьего задания:
+
+Представление:
+
+CREATE VIEW names_towns_dates AS
+SELECT m_name, place_town, con_date FROM musician
+JOIN concert ON concert_orgniser = m_no
+JOIN place ON concert_no = place_no
+
+create procedure get_performers_by_concert_country
+@country nvarchar(40)
+as
+select *
+from names_towns_dates
+where names_of_performers.country = @country
